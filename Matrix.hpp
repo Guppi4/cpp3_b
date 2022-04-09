@@ -33,10 +33,11 @@ namespace zich
         }
         Matrix &operator+=(const Matrix &other);
         Matrix &operator-=(const Matrix &other);
-        Matrix operator+(const Matrix &other);
+        Matrix operator+();
         Matrix operator-(const Matrix &other);
-        friend Matrix operator-(const Matrix &other);
-        friend Matrix operator+(const Matrix &other);
+        Matrix operator-();
+       
+        Matrix operator+(const Matrix &other);
         
         Matrix operator*(const Matrix &other);
         Matrix operator--();
@@ -47,12 +48,12 @@ namespace zich
         friend Matrix operator*(Matrix &n, double num);
         friend Matrix operator*(double num, Matrix &n);
 
-        friend bool operator==(const Matrix &a, const Matrix &b);
-        friend bool operator!=(const Matrix &a, const Matrix &b);
-        friend bool operator>(const Matrix &a, const Matrix &b);
-        friend bool operator>=(const Matrix &a, const Matrix &b);
-        friend bool operator<(const Matrix &a, const Matrix &b);
-        friend bool operator<=(const Matrix &a, const Matrix &b);
+         bool operator==( const Matrix &other);
+         bool operator!=( const Matrix &other);
+         bool operator>( Matrix &other);
+         bool operator>=( Matrix &other);
+         bool operator<( Matrix &other);
+         bool operator<=( Matrix &other);
 
         friend std::ostream &operator<<(std::ostream &os, const Matrix &num);
         friend std::istream &operator>>(std::istream &is, Matrix num);
