@@ -20,46 +20,129 @@ namespace zich
 
     Matrix Matrix::operator--()
     {
+        int row = this->rows;
+        int col = this->columns;
 
+        for (int i = 0; i < row * col; i++)
+        {
+            this->arr[i] -= 1;
+        }
         return *this;
     }
     Matrix Matrix::operator--(int)
     {
-        Matrix copy = *this;
 
+        int row = this->rows;
+        int col = this->columns;
+        Matrix copy = *this;
+        for (int i = 0; i < row * col; i++)
+        {
+            copy.arr[i] -= 1;
+        }
         return copy;
     }
 
     Matrix Matrix::operator++()
     {
+        int row = this->rows;
+        int col = this->columns;
 
+        for (int i = 0; i < row * col; i++)
+        {
+            this->arr[i] += 1;
+        }
         return *this;
     }
     Matrix Matrix::operator++(int)
     {
+        int row = this->rows;
+        int col = this->columns;
         Matrix copy = *this;
+        for (int i = 0; i < row * col; i++)
+        {
+            copy.arr[i] += 1;
+        }
         return copy;
     }
+    Matrix Matrix::operator*(const Matrix &other)
+    {
+        int row = this->rows;
+        int col = other.columns;
+        std::vector<double> mat;
+        mat.resize(row * col);
+        for (int i = 0; i < row; i++)
+        {
+            for (int j = 0; j < col; j++)
+            {
 
+                double sum = 0.0;
+                for (int k = 0; k < other.rows; k++)
+                {
+                    sum = sum + this->arr[i * this->columns + k] * other.arr[k * col + j];
+                }
+                mat[i * col + j] = sum;
+            }
+        }
+        return Matrix(mat,row,col);
+    }
     Matrix operator*(Matrix &n, double num)
     {
-        std::vector<double> identity = {1, 0, 0, 0, 1, 0, 0, 0, 1};
-        zich::Matrix a{identity, 3, 3};
-        return a;
+        int row = n.rows;
+        int col = n.columns;
+
+        std::vector<double> mat;
+        mat.resize(row * col);
+        // Traverse the Matrix x
+        for (int i = 0; i < row * col; i++)
+        {
+
+            // Add the corresponding
+            // blocks of Matrices
+            mat[i] = n.arr[i] * num;
+            // this->arr.push_back(t);
+        }
+
+        return Matrix(mat, row, col);
     }
     Matrix operator*(double num, Matrix &n)
     {
-        std::vector<double> identity = {1, 0, 0, 0, 1, 0, 0, 0, 1};
-        zich::Matrix a{identity, 3, 3};
-        return a;
+
+        int row = n.rows;
+        int col = n.columns;
+
+        std::vector<double> mat;
+        mat.resize(row * col);
+        // Traverse the Matrix x
+        for (int i = 0; i < row * col; i++)
+        {
+
+            // Add the corresponding
+            // blocks of Matrices
+            mat[i] = n.arr[i] * num;
+            // this->arr.push_back(t);
+        }
+
+        return Matrix(mat, row, col);
     }
 
-    Matrix &Matrix::operator*=(int num)
+    Matrix &Matrix::operator*=(const double num)
     {
+
+        int row = this->rows;
+        int col = this->columns;
+
+        // Traverse the Matrix x
+        for (int i = 0; i < row * col; i++)
+        {
+
+            // Add the corresponding
+            // blocks of Matrices
+            this->arr[i] *= num;
+            // this->arr.push_back(t);
+        }
 
         return *this;
     }
-
     Matrix &Matrix::operator-=(const Matrix &other)
     {
         if (this->rows != other.rows || this->columns != other.columns)
@@ -70,19 +153,14 @@ namespace zich
         int row = this->rows;
         int col = this->columns;
 
-        
-
         // Traverse the Matrix x
-        for (int i = 0; i < row; i++)
+        for (int i = 0; i < row * col; i++)
         {
-            for (int j = 0; j < col; j++)
-            {
 
-                // Add the corresponding
-                // blocks of Matrices
-                 this->arr[i + j] += other.arr.at(i + j);
-                //this->arr.push_back(t);
-            }
+            // Add the corresponding
+            // blocks of Matrices
+            this->arr[i] += other.arr.at(i);
+            // this->arr.push_back(t);
         }
 
         return *this;
@@ -97,19 +175,14 @@ namespace zich
         int row = this->rows;
         int col = this->columns;
 
-        
-
         // Traverse the Matrix x
-        for (int i = 0; i < row; i++)
+        for (int i = 0; i < row * col; i++)
         {
-            for (int j = 0; j < col; j++)
-            {
 
-                // Add the corresponding
-                // blocks of Matrices
-                 this->arr[i + j] += other.arr.at(i + j);
-                //this->arr.push_back(t);
-            }
+            // Add the corresponding
+            // blocks of Matrices
+            this->arr[i] += other.arr.at(i);
+            // this->arr.push_back(t);
         }
 
         return *this;
@@ -128,14 +201,19 @@ namespace zich
         mat.resize(row * col);
 
         // Traverse the Matrix x
-        for (int i = 0; i < row; i++)
+        for (int i = 0; i < row * col; i++)
         {
-            for (int j = 0; j < col; j++)
-            {
 
-                // Add the corresponding
-                // blocks of Matrices
-                double t = other.arr.at(i + j) * (-1);
+            // Add the corresponding
+            // blocks of Matrices
+            if (other.arr.at(i) < 0)
+            {
+                double t = other.arr.at(i) * (-1);
+                mat.push_back(t);
+            }
+            else
+            {
+                double t = other.arr.at(i);
                 mat.push_back(t);
             }
         }
@@ -185,16 +263,13 @@ namespace zich
         mat.resize(row * col);
 
         // Traverse the Matrix x
-        for (int i = 0; i < row; i++)
+        for (int i = 0; i < row * col; i++)
         {
-            for (int j = 0; j < col; j++)
-            {
 
-                // Add the corresponding
-                // blocks of Matrices
-                double t = other.arr.at(i + j) * (-1);
-                mat.push_back(t);
-            }
+            // Add the corresponding
+            // blocks of Matrices
+            double t = other.arr.at(i) * (-1);
+            mat.push_back(t);
         }
 
         return Matrix(mat, row, col);
@@ -214,16 +289,13 @@ namespace zich
         mat.resize(row * col);
 
         // Traverse the Matrix x
-        for (int i = 0; i < row; i++)
+        for (int i = 0; i < row * col; i++)
         {
-            for (int j = 0; j < col; j++)
-            {
 
-                // Add the corresponding
-                // blocks of Matrices
-                double t = this->arr.at(i + j) - other.arr.at(i + j);
-                mat.push_back(t);
-            }
+            // Add the corresponding
+            // blocks of Matrices
+            double t = this->arr.at(i) - other.arr.at(i);
+            mat.push_back(t);
         }
 
         return Matrix(mat, row, col);

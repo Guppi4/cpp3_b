@@ -38,12 +38,12 @@ namespace zich
         friend Matrix operator-(const Matrix &other);
         friend Matrix operator+(const Matrix &other);
         
-
+        Matrix operator*(const Matrix &other);
         Matrix operator--();
         Matrix operator--(int);
         Matrix operator++();
         Matrix operator++(int);
-        Matrix& operator*=(int num);
+        Matrix& operator*=(const double num);
         friend Matrix operator*(Matrix &n, double num);
         friend Matrix operator*(double num, Matrix &n);
 
