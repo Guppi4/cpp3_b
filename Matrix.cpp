@@ -240,8 +240,8 @@ namespace zich
                 mat.push_back(t);
             
         }
-
-        return Matrix(mat, row, col);
+        Matrix m(mat, row, col);
+            return m;
     }
 
     Matrix Matrix::operator-() //-a
@@ -263,18 +263,18 @@ namespace zich
              double t =0.0;
             if(this->arr[i]>0){
               t= this->arr[i] * (-1);
-               this->arr[i]=t;   
+              mat[i]=t;   
             
             }
             else{
                t= this->arr[i];
-               this->arr[i]=t;  
+               mat[i]=t;  
             }
             //cout << this->arr[i];
             
         }
-
-        return *this;
+       Matrix m(mat,row,col);
+        return m;
     }
 
     Matrix Matrix::operator-(const Matrix &other) // a-b
@@ -296,8 +296,10 @@ namespace zich
 
             // Add the corresponding
             // blocks of Matrices
+            //cout <<this->arr.at(i)<< " "<<other.arr.at(i) ;
             double t = this->arr.at(i) - other.arr.at(i);
-            mat.push_back(t);
+            //cout <<t;
+            mat[i]=t;
         }
           Matrix m(mat, row, col);
         return m;
