@@ -236,12 +236,11 @@ namespace zich
         std::vector<double> mat;
         mat.resize((size_t)row * (size_t)col);
 
-        // Traverse the Matrix x
+     
         for (size_t i = 0; i < row * col; i++)
         {
 
-            // Add the corresponding
-            // blocks of Matrices
+           
             if (this->arr.at(i) < 0)
             {
                 double t = this->arr.at(i) * (-1);
@@ -273,8 +272,6 @@ namespace zich
         for (size_t i = 0; i < row*col; i++)
         {
             
-                // Add the corresponding
-                // blocks of Matrices
                 double t = this->arr[i] + other.arr[i];
                 mat[i]=t;
             
@@ -293,12 +290,11 @@ namespace zich
         std::vector<double> mat;
         mat.resize((size_t)row * (size_t)col);
 
-        // Traverse the Matrix x
+       
         for (size_t i = 0; i < row * col; i++)
         {
 
-            // Add the corresponding
-            // blocks of Matrices
+            
              double t =0.0;
             if(this->arr[i]>0){
               t= this->arr[i] * (-1);
@@ -309,7 +305,7 @@ namespace zich
                t= this->arr[i];
                mat[i]=t;  
             }
-            //cout << this->arr[i];
+           
             
         }
        Matrix m(mat,row,col);
@@ -333,20 +329,16 @@ namespace zich
         for (size_t i = 0; i < row * col; i++)
         {
 
-            // Add the corresponding
-            // blocks of Matrices
-            //cout <<this->arr.at(i)<< " "<<other.arr.at(i) ;
+            
             double t = this->arr.at(i) - other.arr.at(i);
-            //cout <<t;
+           
             mat[i]=t;
         }
           Matrix m(mat, row, col);
         return m;
     }
 
-    // const NumberWithUnits operator-(const NumberWithUnits& a,const NumberWithUnits b);
-    // const NumberWithUnits operator+(const NumberWithUnits& a,const NumberWithUnits b);
-
+   
     bool operator==(const Matrix &thiss,const Matrix &other)
     {
           if (thiss.rows != other.rows || thiss.columns != other.columns)
@@ -358,8 +350,7 @@ namespace zich
          for (size_t i = 0; i < row * col; i++)
         {
 
-            // Add the corresponding
-            // blocks of Matrices
+            
             if(thiss.arr[i] !=other.arr[i]){
                 return false;
             }
@@ -378,8 +369,7 @@ namespace zich
          for (size_t i = 0; i < row * col; i++)
         {
 
-            // Add the corresponding
-            // blocks of Matrices
+           
             if(this->arr.at(i)!=other.arr.at(i)){
                  return true;
             }
@@ -399,12 +389,10 @@ namespace zich
 
         double s1=0.0;
         double s2=0.0;
-        // Traverse the Matrix x
+       
         for (size_t i = 0; i < row * col; i++)
         {
 
-            // Add the corresponding
-            // blocks of Matrices
             s1+= this->arr.at(i) ;
              s2+=other.arr.at(i);
         }
@@ -423,12 +411,11 @@ namespace zich
 
         double s1=0.0;
         double s2=0.0;
-        // Traverse the Matrix x
+        
         for (size_t i = 0; i < row * col; i++)
         {
 
-            // Add the corresponding
-            // blocks of Matrices
+           
             s1+= this->arr.at(i) ;
              s2+=other.arr.at(i);
         }
@@ -447,12 +434,11 @@ namespace zich
 
         double s1=0.0;
         double s2=0.0;
-        // Traverse the Matrix x
+        
         for (size_t i = 0; i < row * col; i++)
         {
 
-            // Add the corresponding
-            // blocks of Matrices
+            
             s1+= this->arr.at(i) ;
              s2+=other.arr.at(i);
         }
@@ -471,12 +457,11 @@ namespace zich
 
         double s1=0.0;
         double s2=0.0;
-        // Traverse the Matrix x
+       
         for (size_t i = 0; i < row * col; i++)
         {
 
-            // Add the corresponding
-            // blocks of Matrices
+           
             s1+= this->arr.at(i) ;
              s2+=other.arr.at(i);
         }
@@ -536,21 +521,21 @@ namespace zich
 
     istream &operator>>(istream &input, Matrix &mat)
     {
-     char ch = 0;
+        char c = 0;
         string s;
-        while (ch != '\n')
+        while (c != '\n')//input string
         {
-            ch = input.get();
-            s += ch;
+            c = input.get();
+            s += c;
         }
        
-        s.pop_back();
+        s.pop_back();//remove /n
         
         for (unsigned int i = 0; i < s.length()-1; i++)
         {
             if (s.at(i) == ',' && s.at(i+1) != ' ')
             {
-                throw invalid_argument("you have problem with your string");
+                throw invalid_argument("not correct");
             }
             
         }
