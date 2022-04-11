@@ -15,7 +15,7 @@ namespace zich
         if(rows*col!=arr.size()){
         throw runtime_error("not correct");
         }
-        if (col<0 || row<0)
+        if (col<=0 || row<=0)
         {
             throw runtime_error("not correct");
         }
@@ -29,10 +29,10 @@ namespace zich
     {
         int row = this->rows;
         int col = this->columns;
-
+        Matrix copy = *this;
         for (size_t i = 0; i < row * col; i++)
         {
-            this->arr[i] -= 1;
+            this->arr[i] --;
         }
         return *this;
     }
@@ -44,7 +44,7 @@ namespace zich
         Matrix copy = *this;
         for (size_t i = 0; i < row * col; i++)
         {
-            copy.arr[i] -= 1;
+            --this->arr[i];
         }
         return copy;
     }
@@ -53,10 +53,10 @@ namespace zich
     {
         int row = this->rows;
         int col = this->columns;
-
+        Matrix copy = *this;
         for (size_t i = 0; i < row * col; i++)
         {
-            this->arr[i] += 1;
+            this->arr[i] ++;
         }
         return *this;
     }
@@ -67,13 +67,19 @@ namespace zich
         Matrix copy = *this;
         for (size_t i = 0; i < row * col; i++)
         {
-            this->arr[i] += 1;
+            ++this->arr[i] ;
         }
          
         return copy;
     }
     Matrix Matrix::operator*(const Matrix &other)
     {
+         if (this->columns != other.rows)
+       {
+                throw invalid_argument("size");
+        }
+        
+        
         int row = (size_t)this->rows;
         int col = (size_t)other.columns;
         std::vector<double> mat;
@@ -133,14 +139,15 @@ namespace zich
         return Matrix(mat, row, col);
     }
     Matrix &Matrix::operator*=(const Matrix &m){
-           if (this->rows != m.rows || this->columns != m.columns)
+           if (this->columns != m.rows)
         {
             throw runtime_error("not");
         }
          int row = (size_t)this->rows;
         int col = (size_t)m.columns;
         std::vector<double> mat;
-        mat.resize((size_t)row * (size_t)col);
+        
+        this->arr.resize((size_t)row * (size_t)col);
         for (size_t i = 0; i < row; i++)
         {
             for (size_t j = 0; j < col; j++)
@@ -191,7 +198,7 @@ namespace zich
 
             // Add the corresponding
             // blocks of Matrices
-            this->arr[i] += other.arr.at(i);
+            this->arr[i] -= other.arr[i];
             // this->arr.push_back(t);
         }
 
@@ -481,28 +488,104 @@ namespace zich
     {
          for (size_t i = 0; i < m.rows; i++)
         {
-            cout << '[';
+            os << '[';
             for (size_t j = 0; j < m.columns; j++)
-            {   
-                if (j != m.columns -1 )
+            {
+                os << m.arr.at(i*(unsigned int)m.columns+j);
+                if(j != m.columns-1)
                 {
-                    cout << m.arr[(i * (size_t)m.columns + j)] << ' ';
-                }
-                else{
-                    cout <<m.arr[(i * (size_t)m.columns + j)];
+                    os << ' ';
                 }
             }
-            cout << ']' << '\n';
+            if(i!=(m.rows-1) ){
+                os <<"]\n";
+            }
+            else {
+                os << "]";
+            }
+           
         }
+           
         return os;
        
     }
-
-    istream &operator>>(istream &is, Matrix &m)
+    vector<string> split(string str, char seperator)
     {
+        int len = str.length();
+        string temp;
+        vector<string> vec;
+        for (int i = 0; i < len; i++)
+        {
+            if (str[(unsigned int)i] == seperator && !temp.empty())
+            {
+                vec.push_back(temp);
+                temp = "";
+            }
+            else
+            {
+                if (str[(unsigned int)i] == '[' || str[(unsigned int)i] == ']')
+                {
+                    continue;
+                }
+                temp += str[(unsigned int)i];
+            }
+        }
+        vec.push_back(temp);
+        return vec;
+    }
 
+    istream &operator>>(istream &input, Matrix &mat)
+    {
+     char ch = 0;
+        string s;
+        while (ch != '\n')
+        {
+            ch = input.get();
+            s += ch;
+        }
+       
+        s.pop_back();
         
-        return is ;
+        for (unsigned int i = 0; i < s.length()-1; i++)
+        {
+            if (s.at(i) == ',' && s.at(i+1) != ' ')
+            {
+                throw invalid_argument("you have problem with your string");
+            }
+            
+        }
+        vector<string> vs = split(s, ',');
+        
+        int row = vs.size();    
+        int len1 = vs.size();
+        int col = 0;
+        int flag = 1;
+        vector<string> vs2;
+        vector<double> vd;
+           for (int i = 0; i < len1; i++)
+        {
+            vs2 = split(vs[(unsigned int)i], ' ');
+            int len2 = vs2.size();
+            if (flag == 1)
+            {
+                col = len2;
+                flag = 0;
+            }
+            if (col != len2)
+            {
+                throw invalid_argument("you have problem with your string");
+            }
+          
+            for (int j = 0; j < len2; j++)
+            {
+                vd.push_back(stod(vs2[(unsigned int)j]));
+            }
+        }
+        mat.arr = vd;
+        mat.rows = row;
+        mat.columns = col;
+        return input;
+        
         
     }
 

@@ -40,7 +40,7 @@ namespace zich
         Matrix operator+(const Matrix &other);
         
         Matrix operator*(const Matrix &other);
-        Matrix operator--();
+         Matrix operator--();
         Matrix operator--(int);
         Matrix operator++();
         Matrix operator++(int);
@@ -58,6 +58,6 @@ namespace zich
          bool operator<=( Matrix &other);
 
         friend std::ostream &operator<<(std::ostream &os, const Matrix &num);
-        friend std::istream &operator>>(std::istream &is, Matrix &num);
+        friend std::istream &operator>>(std::istream &input, Matrix &mat);
     };
 }
