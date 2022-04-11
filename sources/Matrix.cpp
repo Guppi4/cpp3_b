@@ -494,62 +494,40 @@ namespace zich
         return os;
        
     }
-    vector<string> split(string str, char seperator)
+    vector<string> split(string s, char sep)
     {
-        int len = str.length();
+        
         string temp;
-        vector<string> vec;
-        for (int i = 0; i < len; i++)
+        vector<string> arr;
+        for (int i = 0; i < s.length(); i++)
         {
-            if (str[(unsigned int)i] == seperator && !temp.empty())
+            if (s[(unsigned int)i] == sep && !temp.empty())
             {
-                vec.push_back(temp);
+                arr.push_back(temp);
                 temp = "";
             }
             else
             {
-                if (str[(unsigned int)i] == '[' || str[(unsigned int)i] == ']')
+                if (s[(unsigned int)i] == '[' || s[(unsigned int)i] == ']')
                 {
                     continue;
                 }
-                temp += str[(unsigned int)i];
+                temp += s[(unsigned int)i];
             }
         }
-        vec.push_back(temp);
-        return vec;
+        arr.push_back(temp);
+        return arr;
     }
-
-    istream &operator>>(istream &input, Matrix &mat)
-    {
-        char c = 0;
-        string s;
-        while (c != '\n')//input string
-        {
-            c = input.get();
-            s += c;
-        }
-       
-        s.pop_back();//remove /n
-        
-        for (unsigned int i = 0; i < s.length()-1; i++)
-        {
-            if (s.at(i) == ',' && s.at(i+1) != ' ')
-            {
-                throw invalid_argument("not correct");
-            }
-            
-        }
-        vector<string> vs = split(s, ',');
-        
-        int row = vs.size();    
-        int len1 = vs.size();
+    void split_row(vector<string> &arr,Matrix &mat){
+        int row = arr.size();    
+        int len1 = arr.size();
         int col = 0;
         int flag = 1;
         vector<string> vs2;
         vector<double> vd;
            for (int i = 0; i < len1; i++)
         {
-            vs2 = split(vs[(unsigned int)i], ' ');
+            vs2 = split(arr[(unsigned int)i], ' ');
             int len2 = vs2.size();
             if (flag == 1)
             {
@@ -558,7 +536,7 @@ namespace zich
             }
             if (col != len2)
             {
-                throw invalid_argument("you have problem with your string");
+                throw invalid_argument("not correct");
             }
           
             for (int j = 0; j < len2; j++)
@@ -569,9 +547,38 @@ namespace zich
         mat.arr = vd;
         mat.rows = row;
         mat.columns = col;
+       
+    }
+    istream &operator>>(istream &input, Matrix &mat)
+    {
+        char c = 0;
+        string s;
+        
+        while (c != '\n')//input string
+        {
+            c = input.get();
+            s += c;
+        }
+       
+        s.pop_back();//remove /n
+        unsigned int i = 0;
+        while (s.length()-1!=i)
+        {
+           
+           if (s.at(i) == ',' && s.at(i+1) != ' ')
+            {
+                throw invalid_argument("not correct");
+            }
+            i++;
+        }
+        vector<string> arr = split(s, ',');
+        split_row(arr,mat);
+                
+        
         return input;
-        
-        
     }
 
-}
+}   
+        
+        
+        
