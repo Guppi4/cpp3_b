@@ -480,7 +480,7 @@ namespace zich
 
         return os;
     }
-    vector<string> split(string s, char sep)//split string from input
+    vector<string> split_in(string s, char sep)//split string from input
     {
 
         string t;
@@ -514,7 +514,7 @@ namespace zich
         vector<double> numbers;
         for (int i = 0; i < arr.size(); i++)
         {
-            numbers_ch = split(arr[(unsigned int)i], ' '); // split numbers from row
+            numbers_ch = split_in(arr[(unsigned int)i], ' '); // split numbers from row
             int col1 = numbers_ch.size();                  // colums of matrix
             if (flag == 1)
             {
@@ -556,8 +556,9 @@ namespace zich
             }
             i++;
         }
-        vector<string> arr = split(s, ',');
+        vector<string> arr = split_in(s, ',');
         split_row(arr, mat);
+        
 
         return input;
     }
