@@ -50,7 +50,7 @@ namespace zich
         friend Matrix operator*(Matrix &n, double num);
         friend Matrix operator*(double num, Matrix &n);
 
-        friend bool operator==(const Matrix &thiss,const Matrix &other);
+         friend bool operator==(const Matrix &thiss,const Matrix &other);
          bool operator!=( const Matrix &other);
          bool operator>( Matrix &other);
          bool operator>=( Matrix &other);

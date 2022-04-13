@@ -521,15 +521,17 @@ namespace zich
                 col = col1;
                 flag = 0;
             numbers.resize((unsigned int)row,(unsigned int)col);
+           
             }
             if (col != col1)
             {
-                throw invalid_argument("not correct");
+                throw invalid_argument("input error");//matrix not correct
             }
 
             for (int j = 0; j < col1; j++)
             {
-                numbers.push_back(stod(numbers_ch[(unsigned int)j]));
+                double n=stod(numbers_ch[(unsigned int)j]);//convert char to double
+                numbers.push_back(n);
             }
         }
         mat.rows = row;
@@ -541,12 +543,8 @@ namespace zich
         char c = 0;
         string s;
 
-        while (c != '\n') // input string
-        {
-            c = input.get();
-            s += c;
-        }
-
+        getline(input,s);//input stream
+       
         s.pop_back(); // remove /n
         unsigned int i = 0;
         while (s.length() - 1 != i)//check if string from input correct
