@@ -4,7 +4,9 @@
 #include <string>
 #include <vector>
 #include <utility>
-
+// (size_t) is the unsigned integer type of the result of sizeof which is used to represent the size of objects in bytes
+// (const Matrix &mat) - const - can't change Matrix, & - object not copied
+// Matrix &Matrix - for p1+=p2+=p3... for work with object
 namespace zich
 {
 
@@ -18,8 +20,7 @@ namespace zich
     public:
         Matrix(std::vector<double> arr,int row,int col);
          ~Matrix (){}
-        // NumberWithUnits(double num,std::string str):number(num),_str(str){}
-        // static void read_units(std::ifstream& units_file);
+       
         std::vector<double> getarr(){
             return arr;
         }
@@ -31,7 +32,8 @@ namespace zich
         {
             return columns;
         }
-        Matrix &operator+=(const Matrix &other);
+        Matrix &operator+=(const Matrix &other); //Matrix &Matrix - for p1+=p2+=p3... for work with object
+
         Matrix &operator-=(const Matrix &other);
         Matrix operator+();
         Matrix operator-(const Matrix &other);
@@ -47,7 +49,7 @@ namespace zich
         Matrix& operator*=(const Matrix &m);
         Matrix& operator*=(const double num);
         
-        friend Matrix operator*(Matrix &n, double num);
+        friend Matrix operator*(Matrix &n, double num);//function frend of class can use of elemnts of class (private)
         friend Matrix operator*(double num, Matrix &n);
 
          friend bool operator==(const Matrix &thiss,const Matrix &other);

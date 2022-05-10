@@ -480,7 +480,7 @@ namespace zich
 
         return os;
     }
-    vector<string> split_in(string s, char sep)//split string from input
+    vector<string> split_in(string s, char sep) // split string from input
     {
 
         string t;
@@ -504,33 +504,32 @@ namespace zich
         arr.push_back(t);
         return arr;
     }
-    void split_row(vector<string> &arr, Matrix &mat)//function for split string of row 
+    void split_row(vector<string> &arr, Matrix &mat) // function for split string of row
     {
 
         int row = arr.size();
         int col = 0;
         int flag = 1;
-        vector<string> numbers_ch;//array for number
+        vector<string> numbers_ch; // array for number
         vector<double> numbers;
         for (int i = 0; i < arr.size(); i++)
         {
             numbers_ch = split_in(arr[(unsigned int)i], ' '); // split numbers from row
-            int col1 = numbers_ch.size();                  // colums of matrix
+            int col1 = numbers_ch.size();                     // colums of matrix
             if (flag == 1)
             {
                 col = col1;
                 flag = 0;
-            numbers.resize((unsigned int)row,(unsigned int)col);
-           
+                numbers.resize((unsigned int)row, (unsigned int)col);
             }
             if (col != col1)
             {
-                throw invalid_argument("input error");//matrix not correct
+                throw invalid_argument("input error"); // matrix not correct
             }
 
             for (int j = 0; j < col1; j++)
             {
-                double n=stod(numbers_ch[(unsigned int)j]);//convert char to double
+                double n = stod(numbers_ch[(unsigned int)j]); // convert char to double
                 numbers.push_back(n);
             }
         }
@@ -543,11 +542,11 @@ namespace zich
         char c = 0;
         string s;
 
-        getline(input,s);//input stream
-       
+        getline(input, s); // input stream
+
         s.pop_back(); // remove /n
         unsigned int i = 0;
-        while (s.length() - 1 != i)//check if string from input correct
+        while (s.length() - 1 != i) // check if string from input correct
         {
 
             if (s.at(i) == ',' && s.at(i + 1) != ' ')
@@ -558,7 +557,6 @@ namespace zich
         }
         vector<string> arr = split_in(s, ',');
         split_row(arr, mat);
-        
 
         return input;
     }
